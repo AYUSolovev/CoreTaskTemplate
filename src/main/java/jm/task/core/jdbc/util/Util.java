@@ -13,7 +13,6 @@ public class Util {
     // реализуйте настройку соеденения с БД
 
     private static Util instance;
-    private static SessionFactory sessionFactory;
     private static Connection connection;
 
     static {
@@ -21,17 +20,6 @@ public class Util {
             connection = DriverManager.getConnection("jdbc:mysql://localhost/productdb?serverTimezone=Europe/Moscow&useSSL=false",
                     "root",
                     "106519");
-            Properties properties = new Properties();
-            properties.setProperty(Environment.DRIVER, "com.mysql.jdbc.Driver");
-            properties.setProperty(Environment.URL, "jdbc:mysql://localhost/productdb?serverTimezone=Europe/Moscow&useSSL=false");
-            properties.setProperty(Environment.USER, "root");
-            properties.setProperty(Environment.PASS, "106519");
-            properties.setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-            properties.setProperty(Environment.HBM2DDL_AUTO, "update");
-            Configuration cfg = new Configuration()
-                    .setProperties(properties);
-            cfg.addAnnotatedClass(User.class);
-            sessionFactory = cfg.buildSessionFactory();
         } catch (Exception sqlE) {
             sqlE.printStackTrace();
         }
@@ -51,11 +39,7 @@ public class Util {
         return instance;
     }
 
-    public Connection getConnection () {
+    public Connection getConnection() {
         return connection;
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }
